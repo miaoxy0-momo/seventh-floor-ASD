@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第七层</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        min-height: 100%;
+    }
+
+    body {
+        background: #21152f;
+        color: #fff;
+        font-family:
+            "Noto Sans SC",
+            "Microsoft YaHei",
+            "PingFang SC",
+            sans-serif;
+
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .page {
+        width: min(90vw, 720px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 顶部图片 */
+    .main-image {
+        display: block;
+        width: 100%;
+        max-height: 420px;
+        object-fit: contain;
+        margin-bottom: 22px;
+    }
+
+    /* 输入框 */
+    #passwordInput {
+        width: min(85%, 520px);
+        height: 58px;
+        border: 2px solid #8f78a8;
+        border-radius: 8px;
+        outline: none;
+
+        background: #30203f;
+        color: #fff;
+        font-size: 24px;
+        text-align: center;
+        padding: 0 18px;
+
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    #passwordInput:focus {
+        border-color: #c7b4da;
+        box-shadow: 0 0 12px rgba(199, 180, 218, 0.25);
+    }
+
+    #passwordInput::placeholder {
+        color: #9e91aa;
+    }
+
+    /* 输出区域 */
+    #output {
+        width: min(85%, 520px);
+        min-height: 300px;
+        margin-top: 22px;
+        padding: 30px 28px;
+
+        border: 2px solid #8f78a8;
+        border-radius: 8px;
+        background: #281a36;
+
+        color: #fff;
+        font-size: 22px;
+        line-height: 1.8;
+
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+
+        /* 初始不显示文本 */
+        display: none;
+    }
+
+    #output.visible {
+        display: block;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 25px 12px;
+        }
+
+        .page {
+            width: 100%;
+        }
+
+        #passwordInput,
+        #output {
+            width: 92%;
+        }
+
+        #passwordInput {
+            height: 52px;
+            font-size: 20px;
+        }
+
+        #output {
+            font-size: 19px;
+            padding: 24px 20px;
+        }
+    }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+    
+    <img
+        class="main-image"
+        src="pageAS.png"
+        alt=""
+    >
+
+    <input
+        id="passwordInput"
+        type="text"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder=""
+    >
+
+    <div id="output"></div>
+</div>
+
+<script>
+    /*
+     * ==========================
+     *       密语
+     * ==========================
+     */
+
+    const passwords = {
+        "XTNUX": `这一段是普通色色结局
+
+
+*如果你想要选择战斗，请将密码反过来输入`,
+
+        "XUNTX": `这一段是普通战斗结局
+
+
+*如果你不想要选择战斗，请将密码反过来输入`,
+
+        "LGXZ": `这一段是隐藏结局`
+    };
+
+    const input = document.getElementById("passwordInput");
+    const output = document.getElementById("output");
+
+    input.addEventListener("keydown", function(event) {
+        // 按 Enter 后检查密语
+        if (event.key !== "Enter") {
+            return;
+        }
+
+        const password = input.value.trim();
+
+        if (Object.prototype.hasOwnProperty.call(passwords, password)) {
+            output.textContent = passwords[password];
+            output.classList.add("visible");
+        } else {
+            // 输入错误时什么也不发生
+            // 如果之前已经显示过文本，也保持原样
+        }
+    });
+</script>
+</body>
+</html>
